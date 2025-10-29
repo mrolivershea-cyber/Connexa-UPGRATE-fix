@@ -374,10 +374,7 @@ class NetworkTester:
                 results['overall'] = 'offline'
         
         return results
-
-# Global instances
-service_manager = ServiceManager()
-network_tester = NetworkTester()
+    
     async def enrich_node_complete(self, node, db_session):
         """Обогатить узел fraud и geo данными"""
         try:
@@ -387,3 +384,7 @@ network_tester = NetworkTester()
             import logging
             logging.getLogger(__name__).error(f"enrich_node_complete error: {e}")
             return False
+
+# Global instances
+service_manager = ServiceManager()
+network_tester = NetworkTester()
