@@ -15,6 +15,8 @@ import threading
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import logging
+from dotenv import load_dotenv
+load_dotenv()
 
 # Local imports
 from database import get_db, User, Node, create_tables, hash_password, verify_password, SessionLocal

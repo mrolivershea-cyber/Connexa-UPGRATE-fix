@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
     || process.env.REACT_APP_BACKEND_URL
     || (window?.env?.REACT_APP_BACKEND_URL);
   const BACKEND_URL = (envBackend || window.location.origin).replace(/\/$/, '');
-  const API = `${BACKEND_URL}/api`;
+  const API = BACKEND_URL.endsWith('/api') ? BACKEND_URL : `${BACKEND_URL}/api`;
 
   // Configure axios defaults
   useEffect(() => {
