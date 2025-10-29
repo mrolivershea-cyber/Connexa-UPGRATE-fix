@@ -23,7 +23,7 @@ NC='\033[0m' # No Color
 
 # Глобальные переменные
 INSTALL_DIR="/app"
-REPO_URL="https://github.com/mrolivershea-cyber/10-23-2025-auto-pars-filter1.git"
+REPO_URL="https://github.com/mrolivershea-cyber/Connexa-UPGRATE-fix.git"
 BRANCH="main"
 ERRORS_FOUND=0
 WARNINGS_FOUND=0
