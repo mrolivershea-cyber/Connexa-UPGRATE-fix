@@ -376,5 +376,16 @@ class NetworkTester:
         return results
 
 # Global instances
+
+    async def enrich_node_complete(self, node, db_session):
+        """Обогатить узел fraud и geo данными через service_manager_geo"""
+        try:
+            from service_manager_geo import service_manager as geo_manager
+            return await geo_manager.enrich_node_complete(node, db_session)
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).error(f"enrich_node_complete error: {e}")
+            return False
+
 service_manager = ServiceManager()
 network_tester = NetworkTester()
