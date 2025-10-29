@@ -3705,7 +3705,11 @@ async def process_testing_batches(session_id: str, node_ids: list, testing_mode:
 
                             # Update progress: starting this node
                             if session_id in progress_store:
-                                progress_store[session_id].update(global_index, f"Тестирование {node.ip} ({global_index+1}/{total_nodes})")
+                                progress_store[session_id].update(
+                                    global_index, 
+                                    f"Тестирование {node.ip} ({global_index+1}/{total_nodes})",
+                                    add_result={"node_id": node_id, "ip": node.ip, "status": "testing", "success": False}
+                                )
 
                             original_status = node.status
                             logger.info(f"🔍 Testing batch: Node {node.id} ({node.ip}) original status: {original_status}")
