@@ -3968,7 +3968,11 @@ async def process_ping_light_batches(session_id: str, node_ids: list, db_session
 
                         # Update progress: starting this node
                         if session_id in progress_store:
-                            progress_store[session_id].update(global_index, f"PING LIGHT тест {node.ip} ({global_index+1}/{total_nodes})")
+                            progress_store[session_id].update(
+                                global_index, 
+                                f"PING LIGHT тест {node.ip} ({global_index+1}/{total_nodes})",
+                                add_result={"node_id": node_id, "ip": node.ip, "status": "testing", "success": False}
+                            )
 
                         original_status = node.status
                         logger.info(f"🔍 PING LIGHT batch: Node {node.id} ({node.ip}) original status: {original_status}")
