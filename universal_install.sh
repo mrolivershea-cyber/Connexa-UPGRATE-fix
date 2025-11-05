@@ -2,8 +2,8 @@
 ##########################################################################################
 # CONNEXA ADMIN PANEL - УНИВЕРСАЛЬНЫЙ УСТАНОВОЧНЫЙ СКРИПТ  
 # Автоматическая установка с GitHub с поэтапными тестами и проверками
-# Версия: 5.0 - РЕПОЗИТОРИЙ auto-pars-filter1 + SCAMALYTICS
-# Репозиторий: https://github.com/mrolivershea-cyber/10-23-2025-auto-pars-filter1
+# Версия: 6.0 - UPGRADED VERSION с исправленными фильтрами и супер-парсером
+# Репозиторий: https://github.com/mrolivershea-cyber/Connexa-UPGRATE
 ##########################################################################################
 
 set -e  # Exit on any error
@@ -23,7 +23,7 @@ NC='\033[0m' # No Color
 
 # Глобальные переменные
 INSTALL_DIR="/app"
-REPO_URL="https://github.com/mrolivershea-cyber/Connexa-UPGRATE-fix.git"
+REPO_URL="https://github.com/mrolivershea-cyber/Connexa-UPGRATE.git"
 BRANCH="main"
 ERRORS_FOUND=0
 WARNINGS_FOUND=0
@@ -302,7 +302,16 @@ else
     fi
     
     print_info "Клонирование репозитория..."
-    git clone -b $BRANCH $REPO_URL $INSTALL_DIR
+    
+    # Поддержка GitHub токена для приватных репозиториев
+    if [ -n "$GITHUB_TOKEN" ]; then
+        print_info "Используется GitHub токен для клонирования..."
+        REPO_URL_WITH_TOKEN=$(echo $REPO_URL | sed "s|https://|https://$GITHUB_TOKEN@|")
+        git clone -b $BRANCH $REPO_URL_WITH_TOKEN $INSTALL_DIR > /dev/null 2>&1
+    else
+        git clone -b $BRANCH $REPO_URL $INSTALL_DIR
+    fi
+    
     print_success "Репозиторий склонирован"
 fi
 
@@ -528,6 +537,16 @@ else
 ADMIN_SERVER_IP=$SERVER_IP
 DATABASE_URL=sqlite:///./connexa.db
 SECRET_KEY=$(openssl rand -hex 32)
+
+# IPQualityScore API Key
+IPQS_API_KEY=vUDnFJfLgHSLD7SyxoWLGrLysWt60Saw
+
+# AbuseIPDB API Key
+ABUSEIPDB_KEY=560f991489ab6d2ba4a363c634347d0e1f3040b8e90e0afb75cd9668ed7b370524f5cdd4f8f793bb
+
+# Active services
+GEO_SERVICE=ip-api
+FRAUD_SERVICE=ipqs
 EOF
     print_success "Backend .env создан"
 fi
